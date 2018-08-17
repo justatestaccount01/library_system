@@ -1,1 +1,44 @@
 # library_system
+
+This is an implementation of a library system.  The books of a library can be represented as a non-fungible asset, hence this uses the openzeppelin ERC-721 implentation as a baseline.  A book can be thought of as a token.
+
+## Setup
+
+1. Install nodejs and rpm
+2. Clone the project
+3. Enter directory
+4. Install dependencies by running npm install
+
+## Tests
+Execute npm test.  This will launch truffle test which runs in truffle develop
+
+##Information
+
+*'Library.sol' extends from ERC721Token and represents the library.  The deployer of this contract is the 
+library owner.
+
+*'struct Book' is a proof of concept for the meta information associated with a book.  It should eventually follow the meta implementaiton defined by openzeppelin.
+*'address[] user_history' records who has owned the book.  This is actual unnecessary as web3 front end could parse the events over time.
+*'bool[] repair_history' tracks repair states.
+
+*'mapping (address => bool) public staff' is those accounts who add books and checkout books.
+
+*'enable_staff()' allows the owner to add staff
+
+*'disable_staff()' allows the owner to remove staff
+
+*'staff_status()' is a read-only function that gets staff state
+
+*'add_book()' allows a staff member to add a book to the library (the owner's accounts)
+
+*'check_out()' allows a staff member to check_out a book to any ethereum address
+
+*'check_in()' allows any user to check in a book given the tokenId
+
+*'view_book()' is convinence function to get a particular book's meta data.
+
+*'get_index_number()' returns the total amount of books. (books are indexed/identified starting from 0)
+
+*'transferFrom' overrides openzeppelins implementation to add meta-data functionality.
+
+All other openzeppenlin functions are avaliable.
