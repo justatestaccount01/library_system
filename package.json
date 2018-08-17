@@ -1,0 +1,19 @@
+{
+  "name": "library_system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "truffle-config.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "truffle test"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "truffle": "^4.1.14",
+    "openzeppelin-solidity": "^1.12"
+   }
+}
