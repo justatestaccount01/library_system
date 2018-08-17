@@ -27,14 +27,7 @@ contract Library is ERC721Token {
     uint256 internal token_id_pool = 0;
     // Mapping for token URIs
     mapping(uint256 => Book) internal token_meta_data;
-
-    /* We will override the 'meta' NFT part of
-     * of the frame work and use a simple struct
-     * for proof of concept. In reality this 
-     * information should be in JSON format
-     * stored on IPFS
-    */
-
+     
     event staff_update(
         address indexed _staff,
         bool indexed _status 
@@ -53,6 +46,11 @@ contract Library is ERC721Token {
     event book_checked_in(
         address indexed _from,
         uint256 indexed _token_id
+    );
+
+    event book_repair_state_changed(
+        uint256 indexed _token_id,
+        bool indexed _state
     );
 
     modifier hasStaffPermission() {
@@ -94,6 +92,19 @@ contract Library is ERC721Token {
         return staff[_address];
     }
 
+    function change_repair_state(uint256 _tokenId, bool _state) 
+        external
+        isStaff
+    {
+        //Check if book exists
+        require(exists(_tokenId));
+        //Check owner is library
+        require(ownerOf(_tokenId) == lib_owner);
+        //We leave it to user to know correct state
+        token_meta_data[_tokenId].repair_history.push(_state);
+        emit book_repair_state_changed(_tokenId, _state);
+    }
+
     //TODO: should check condition is within bounds (1-10)
     function add_book(string _book_name, uint8 _condition) 
         external
@@ -123,6 +134,10 @@ contract Library is ERC721Token {
         require(exists(_tokenId));
         //Check owner is library
         require(ownerOf(_tokenId) == lib_owner);
+        //Not most efficent way
+        uint256 repair_size = token_meta_data[_tokenId].repair_history.length;
+        bool repair_state = token_meta_data[_tokenId].repair_history[repair_size - 1];
+        require(repair_state == false);
         transferFrom(lib_owner, _to, _tokenId);
         emit book_checked_out(_to, _tokenId);
     }

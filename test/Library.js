@@ -97,5 +97,38 @@ contract('Book interaction tests', async (accounts) => {
 			3,
 			{from: web3.eth.accounts[4], gas:3000000});		
 	});
+	
+	it("Librarian can update repair state [change-repair_state]", async () => {
+		let instance = await Library.deployed();
+		let result = await instance.enable_staff(web3.eth.accounts[7]);
+		result = await instance.change_repair_state(4, true, {from: web3.eth.accounts[7], gas:300000});
+	});
+	
+	it("Librarian is blocked from checking outbook under repair", async () => {
+		let instance = await Library.deployed();
+		try {
+			result = await instance.check_out(
+				web3.eth.accounts[6],
+				4,
+				{from: web3.eth.accounts[7], gas:3000000});
+				assert.equal(true, false, "Librarian should not be able to check out book in repair");
+		} catch (error) {
+			//success
+		}
+	});
+	
+	it("After repairing the Librarian can checkout the book", async () => {
+		let instance = await Library.deployed();
+		let result = await instance.change_repair_state(4, false, {from: web3.eth.accounts[7], gas:300000});
+		try {
+			result = await instance.check_out(
+			web3.eth.accounts[6],
+			4,
+			{from: web3.eth.accounts[7], gas:3000000});
+		} catch (error) {
+			console.log(result);
+			assert.equal(true, false, "Librarian should be able to check out book");
+		}
+	});
 });
 
