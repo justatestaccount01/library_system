@@ -2,6 +2,8 @@
 
 This is an implementation of a library system.  The books of a library can be represented as a non-fungible asset, hence this uses the openzeppelin ERC-721 implentation as a baseline.  A book can be thought of as a token.
 
+Assumption: Repair means the book can no longer be checked out.  Only librarians can enter books into repair states.  I leave condition/status up to individual users, but in a production envinroment there should be a gate for this (librarians or approved members update state on check_in).
+
 ## Setup
 
 1. Install nodejs and rpm
@@ -43,4 +45,4 @@ library owner.
 
 * `transferFrom` overrides openzeppelins implementation to add a custom (struct) meta-data functionality.
 
-All other openzeppenlin functions are avaliable.
+All other openzeppenlin exposed functions are avaliable.
