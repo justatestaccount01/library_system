@@ -1,5 +1,5 @@
 var Library = artifacts.require("Library");
-	/*
+
 contract('Library-enable-disable unit tests', function(accounts) {
 	it("Owner can add librarians", function() {
 		Library.deployed().then(function(instance) {
@@ -44,7 +44,7 @@ contract('Library-staff-status unit test', async (accounts) => {
 		assert.equal(staff_status, false);
 	})
 });
-*/
+
 contract('Book interaction tests', async (accounts) => {
 	it("Only Librarians can add books [add_book]", async () => {
 		let instance = await Library.deployed();
