@@ -19,9 +19,9 @@ Execute `npm run test`.  This will launch truffle test which runs in truffle dev
 * `Library.sol` extends from ERC721Token and represents the library.  The deployer of this contract is the 
 library owner.
 
-* `struct Book` is a proof of concept for the meta information associated with a book.  It should eventually follow the meta implementaiton defined by openzeppelin.
-* `address[] user_history` records who has owned the book.  This is actual unnecessary as web3 front end could parse the events over time.
-* `bool[] repair_history` tracks repair states.
+* `struct Book` is a proof of concept for the meta information associated with a book.  It should eventually follow the meta implementaiton defined by openzeppelin and be a URI identifier to somewhere on IPFS.
+* `address[] user_history` records who has owned the book.  This is actual unnecessary as web3 front end could parse the events over time and an array can face growth issues.
+* `bool[] repair_history` tracks repair states. Also unnecessary, but just for completeness.
 
 * `mapping (address => bool) public staff` is those accounts who add books and checkout books.
 
@@ -41,6 +41,6 @@ library owner.
 
 * `get_index_number()` returns the total amount of books. (books are indexed/identified starting from 0)
 
-* `transferFrom` overrides openzeppelins implementation to add meta-data functionality.
+* `transferFrom` overrides openzeppelins implementation to add a custom (struct) meta-data functionality.
 
 All other openzeppenlin functions are avaliable.
